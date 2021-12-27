@@ -1,0 +1,29 @@
+{
+  "name": "teachback",
+  "version": "1.0.0",
+  "description": "A tutorial website for developers that makes showing off your code easy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && ../client && npm i",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mehdisafari77/Teachback.git"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mehdisafari77/Teachback/issues"
+  },
+  "homepage": "https://github.com/mehdisafari77/Teachback#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
