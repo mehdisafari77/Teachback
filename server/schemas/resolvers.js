@@ -4,7 +4,7 @@ const resolvers = {
     Query: {
         Tutorials: async (name, categoryID) => {
             return await Tutorial.find({
-                name: new RegExp(name, 'i'),
+                name: new RegExp(name, 'i'),    // Searches for tutorials with name like given name
                 category: categoryID
             }).populate('category').populate('author');
         },
