@@ -35,7 +35,7 @@ const typeDefs = gql`
         Categories: [Category]
     }
 
-    type Mutations {
+    type Mutation {
         CreateTutorial(steps: [String], name: String, categoryID: ID): Tutorial
         CreateRoom(tutorialID: ID, ownerID: ID): Room
         CreateUser(email: String, password: String, username: String): User
