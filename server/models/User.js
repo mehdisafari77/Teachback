@@ -1,7 +1,9 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schama({
-    // TODO
+    email: String,
+    username: String,
+    password: String,
 });
 
 const User = model('User', userSchema);

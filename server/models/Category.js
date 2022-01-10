@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const categorySchema = new Schama({
-    // TODO
+    name: String
 });
 
 const Category = model('Category', categorySchema);
