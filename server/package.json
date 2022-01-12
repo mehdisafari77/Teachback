@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "watch": "nodemon server.js",
+    "seed": "node seed.js"
   },
   "jest": {
     "transform": {
@@ -15,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-core": "^3.6.1",
     "apollo-server-express": "^3.5.0",
     "dot-env": "^0.0.1",
     "express": "^4.17.2",
@@ -22,6 +25,7 @@
   },
   "devDependencies": {
     "babel-jest": "^27.4.6",
-    "jest": "^27.4.7"
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15"
   }
 }

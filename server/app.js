@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 
-const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -13,6 +12,10 @@ if(process.env.NODE_ENV === 'production') {
 
 app.get('*', (req, res) => {
     app.use(express.static(path.join(__dirname, '../client/build')));
+});
+
+app.get('/hello', (req, res) => {
+    res.send('Hello World!');
 });
 
 module.exports = app;

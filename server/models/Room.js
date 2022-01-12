@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const roomSchema = new Schama({
+const roomSchema = new Schema({
     connected: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
     currentStep: Number,

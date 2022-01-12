@@ -31,7 +31,7 @@ const typeDefs = gql`
 
     type Query {
         Tutorials(name: String, categoryID: ID): [Tutorial]
-        Room(roomID: ID) Room
+        Room(roomID: ID): Room
         Categories: [Category]
     }
 

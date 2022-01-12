@@ -14,7 +14,7 @@ const resolvers = {
         },
         Categories: () => {
             // TODO
-            return null;
+            return [{ name: "JavaScript" }, { name: "HTML" }, { name: "CSS" }];
         }
     },
 
