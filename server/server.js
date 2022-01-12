@@ -21,7 +21,7 @@ async function startApolloServer() {
     server.applyMiddleware({ app });
     await new Promise(resolve => httpServer.listen({ port: 4000 }, resolve));
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
-    
+
     // Run Express Server
     db.once('open', () => {
         app.listen(PORT, () => {
@@ -32,4 +32,4 @@ async function startApolloServer() {
     return { server, app };
 }
 
-startApolloServer();
+module.exports = startApolloServer();
