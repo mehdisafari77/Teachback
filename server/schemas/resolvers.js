@@ -1,20 +1,23 @@
 const { Tutorial, User, Room, Category } = require('../models');
+const mongoose = require('mongoose');
 
 const resolvers = {
     Query: {
-        Tutorials: async (name, categoryID) => {
-            return await Tutorial.find({
-                name: new RegExp(name, 'i'),    // Searches for tutorials with name like given name
-                category: categoryID
-            }).populate('category').populate('author');
+        Tutorials: async (_parent, { name, categoryID }) => {
+            console.log(name, categoryID)
+            let options = {};
+            // TODO - scrub text of regular expressions. Escape spacial characters.
+            if(name) options.name = new RegExp(name, "i");
+            if(categoryID) options.category = categoryID
+            return await Tutorial.find(options).populate('category').populate('author');
         },
         Room: async (roomID) => {
             // TODO
             return null;
         },
-        Categories: () => {
+        Categories: async () => {
             // TODO
-            return [{ name: "JavaScript" }, { name: "HTML" }, { name: "CSS" }];
+            return await Category.find();
         }
     },
 
