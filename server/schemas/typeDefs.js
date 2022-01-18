@@ -40,6 +40,8 @@ const typeDefs = gql`
         CreateRoom(tutorialID: ID, ownerID: ID): Room
         CreateUser(email: String, password: String, username: String): User
         Login(username: String, password: String): User
+        ConnectToRoom(userID: ID): Room
+        DisconnectFromRoom(userID: ID): Room
     }
 
 `

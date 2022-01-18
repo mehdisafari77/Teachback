@@ -14,7 +14,9 @@
     "url": "git+https://github.com/mehdisafari77/Teachback.git"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "dotenv": "^11.0.0",
+    "jest": "^27.4.7"
   },
   "keywords": [],
   "author": "",
@@ -22,8 +24,5 @@
   "bugs": {
     "url": "https://github.com/mehdisafari77/Teachback/issues"
   },
-  "homepage": "https://github.com/mehdisafari77/Teachback#readme",
-  "dependencies": {
-    "dotenv": "^10.0.0"
-  }
+  "homepage": "https://github.com/mehdisafari77/Teachback#readme"
 }

@@ -18,6 +18,8 @@ Coming Soon!
 * Jest
 * Apollo Server
 * GraphQL
+* Figma
+* Insomnia
 
 # Design Philosophy
 This application was created following a test driven, iterative development cycle. When developing for the front end, we will be following a mobile first development approach.

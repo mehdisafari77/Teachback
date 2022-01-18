@@ -37,6 +37,14 @@ const resolvers = {
         Login: (username, password) => {
             // TODO
             return null;
+        },
+        ConnectToRoom: (userID) => {
+            // TODO
+            return null;
+        },
+        DisconnectFromRoom: (userID) => {
+            // TODO
+            return null;
         }
     }
 }
