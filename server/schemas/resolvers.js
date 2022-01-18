@@ -13,8 +13,14 @@ const resolvers = {
             return await Tutorial.find(options).populate('category').populate('author');
         },
         Room: async (_parent, { roomID }) => {
-            // TODO
-            return null;
+            const room = await Room.findById(roomID)
+            .populate("owner")
+            .populate("connected")
+            .populate({
+                path: "tutorial",
+                populate: ["author", "category"]
+            });
+            return room;
         },
         Categories: async () => {
             return await Category.find();
@@ -27,7 +33,6 @@ const resolvers = {
             return null;
         },
         CreateRoom: async (_parent, { tutorialID, ownerID }) => {
-            // TODO
             const newRoom = new Room({
                 connected: [],
                 owner: ownerID,
@@ -39,7 +44,7 @@ const resolvers = {
                 if(err) console.log(err);
             });
             await Room.populate(newRoom, { path: "owner" });
-            await Room.populate(newRoom, { path: "tutorial" });
+            await Room.populate(newRoom, { path: "tutorial", populate: ["author", "category"] });
             return newRoom;
         },
         CreateUser: (_parent, { email, password, username }) => {
