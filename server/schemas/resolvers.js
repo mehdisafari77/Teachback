@@ -12,7 +12,7 @@ const resolvers = {
             
             return await Tutorial.find(options).populate('category').populate('author');
         },
-        Room: async (roomID) => {
+        Room: async (_parent, { roomID }) => {
             // TODO
             return null;
         },
@@ -22,27 +22,39 @@ const resolvers = {
     },
 
     Mutation: {
-        CreateTutorial: (steps, name, categoryID, userID) => {
+        CreateTutorial: (_parent, { steps, name, categoryID, userID }) => {
             // TODO
             return null;
         },
-        CreateRoom: (tutorialID, ownerID) => {
+        CreateRoom: async (_parent, { tutorialID, ownerID }) => {
+            // TODO
+            const newRoom = new Room({
+                connected: [],
+                owner: ownerID,
+                currentStep: 0,
+                tutorial: tutorialID
+            });
+            await newRoom.save((err) => {
+                // TODO - Improve error handling
+                if(err) console.log(err);
+            });
+            await Room.populate(newRoom, { path: "owner" });
+            await Room.populate(newRoom, { path: "tutorial" });
+            return newRoom;
+        },
+        CreateUser: (_parent, { email, password, username }) => {
             // TODO
             return null;
         },
-        CreateUser: (email, password, username) => {
+        Login: (_parent, { username, password }) => {
             // TODO
             return null;
         },
-        Login: (username, password) => {
+        ConnectToRoom: (_parent, { userID }) => {
             // TODO
             return null;
         },
-        ConnectToRoom: (userID) => {
-            // TODO
-            return null;
-        },
-        DisconnectFromRoom: (userID) => {
+        DisconnectFromRoom: (_parent, { userID }) => {
             // TODO
             return null;
         }
