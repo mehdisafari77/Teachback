@@ -57,7 +57,7 @@ const resolvers = {
             }
 
             // Check the given email is unique
-            const oldUser = await User.findOne({ email });
+            const oldUser = await User.findOne({ email, username });
             console.log(oldUser);
             if(oldUser) {
                 // TODO - Improve error handling
@@ -69,7 +69,7 @@ const resolvers = {
             // Encrypt password
             const encryptedPassword = await bcrypt.hash(password, 10) // 10 salt rounds
             // Create a new user
-            const newUser = new User({ email, encryptedPassword, username });
+            const newUser = new User({ email, password: encryptedPassword, username });
             await newUser.save((err) => {
                 // TODO - Improve error handling
                 if(err) console.log(err);
@@ -78,9 +78,32 @@ const resolvers = {
             return newUser;
             
         },
-        Login: (_parent, { username, password }) => {
-            // TODO
-            return null;
+        Login: async (_parent, { username, password }) => {
+            // Check for all information needed
+            if(!(username && password)) {
+                // TODO - Improve error handling
+                console.log("ERROR LOGGING IN - Insufficient information.");
+                return null;
+            }
+
+            // Check for a user with the given username
+            const user = await User.findOne({ username });
+            if(!user) {
+                // TODO - Improve error handling
+                console.log("ERROR LOGGING IN - Username not found.");
+                return null;
+            }
+
+            // Check the given password
+            if(!await user.checkPassword(password)) {
+                // TODO - Improve error handling
+                console.log("ERROR LOGGING IN - Incorrect password.");
+                return null;
+            }
+
+            // TODO - Add user to the apollo context.
+
+            return user;
         },
         ConnectToRoom: async (_parent, { roomID, userID }) => {
             // TODO - Check for existing connection from that user
