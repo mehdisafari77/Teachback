@@ -67,9 +67,18 @@ const resolvers = {
 
             return room;
         },
-        DisconnectFromRoom: (_parent, { userID }) => {
-            // TODO
-            return null;
+        DisconnectFromRoom: async (_parent, { roomID, userID }) => {
+            const room = await Room.findOneAndUpdate(
+                { _id: roomID },
+                { $pull: { connected: userID } },
+                { new: true }
+            ).populate("owner")
+            .populate("connected")
+            .populate({ path: "tutorial", populate: ["author", "category"] });
+
+            console.log(room);
+
+            return room;
         }
     }
 }
