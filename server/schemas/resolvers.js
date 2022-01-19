@@ -1,5 +1,6 @@
 const { Tutorial, User, Room, Category } = require('../models');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const resolvers = {
     Query: {
@@ -47,9 +48,35 @@ const resolvers = {
             await Room.populate(newRoom, { path: "tutorial", populate: ["author", "category"] });
             return newRoom;
         },
-        CreateUser: (_parent, { email, password, username }) => {
-            // TODO
-            return null;
+        CreateUser: async (_parent, { email, password, username }) => {
+            // Check all info is given
+            if(!(email && password && username)) {
+                // TODO - Improve error handling
+                console.log("ERROR CREATING USER - Insufficient info.")
+                return null;
+            }
+
+            // Check the given email is unique
+            const oldUser = await User.findOne({ email });
+            console.log(oldUser);
+            if(oldUser) {
+                // TODO - Improve error handling
+                console.log("ERROR CREATING USER - This email is already in use.");
+                return null;
+            }
+
+            // TODO define and check password requirements
+            // Encrypt password
+            const encryptedPassword = await bcrypt.hash(password, 10) // 10 salt rounds
+            // Create a new user
+            const newUser = new User({ email, encryptedPassword, username });
+            await newUser.save((err) => {
+                // TODO - Improve error handling
+                if(err) console.log(err);
+            });
+
+            return newUser;
+            
         },
         Login: (_parent, { username, password }) => {
             // TODO
