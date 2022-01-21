@@ -29,9 +29,21 @@ const resolvers = {
     },
 
     Mutation: {
-        CreateTutorial: (_parent, { steps, name, categoryID, userID }) => {
-            // TODO
-            return null;
+        CreateTutorial: async (_parent, { steps, name, categoryID, userID }) => {
+            // Check information
+            if(!(steps && name && categoryID && userID)) {
+                // TODO - Improve error handling
+                if(err) console.log(err);
+            }
+            const newTutorial = new Tutorial({steps, name, category: categoryID, author: userID});
+            await newTutorial.save((err) => {
+                // TODO - Improve error handling
+                if(err) console.log(err);
+            });
+            await Tutorial.populate(newTutorial, "author");
+            await Tutorial.populate(newTutorial, "category");
+
+            return newTutorial;
         },
         CreateRoom: async (_parent, { tutorialID, ownerID }) => {
             const newRoom = new Room({
@@ -66,6 +78,7 @@ const resolvers = {
             }
 
             // TODO define and check password requirements
+
             // Encrypt password
             const encryptedPassword = await bcrypt.hash(password, 10) // 10 salt rounds
             // Create a new user

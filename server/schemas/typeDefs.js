@@ -36,7 +36,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        CreateTutorial(steps: [String], name: String, categoryID: ID): Tutorial
+        CreateTutorial(steps: [String], name: String, categoryID: ID, userID: ID): Tutorial
         CreateRoom(tutorialID: ID, ownerID: ID): Room
         CreateUser(email: String, password: String, username: String): User
         Login(username: String, password: String): User
