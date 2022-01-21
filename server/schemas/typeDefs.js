@@ -6,6 +6,7 @@ const typeDefs = gql`
         email: String
         username: String
         password: String
+        stepFinished: Boolean
     }
 
     type Tutorial {
@@ -42,6 +43,7 @@ const typeDefs = gql`
         Login(username: String, password: String): User
         ConnectToRoom(roomID: ID, userID: ID): Room
         DisconnectFromRoom(roomID: ID, userID: ID): Room
+        ToggleStepFinished(userID: ID): User
     }
 
 `

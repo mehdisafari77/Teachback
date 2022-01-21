@@ -1,6 +1,7 @@
 const { Tutorial, User, Room, Category } = require('../models');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { findById } = require('../models/Room');
 
 const resolvers = {
     Query: {
@@ -122,12 +123,17 @@ const resolvers = {
             // TODO - Check for existing connection from that user
             const room = await Room.findOneAndUpdate(
                 { _id: roomID }, 
-                { $push: { connected: userID } },
+                { $push: { connected: userID }, },
                 { new: true })
             .populate("owner")
             .populate("connected")
             .populate({ path: "tutorial", populate: ["author", "category"]});
-
+            const user = await User.findOneAndUpdate(
+                { _id: userID },
+                { stepFinished: false, },
+                { new: true }
+            )
+            user.toggleStepFinished();
             return room;
         },
         DisconnectFromRoom: async (_parent, { roomID, userID }) => {
@@ -139,9 +145,22 @@ const resolvers = {
             .populate("connected")
             .populate({ path: "tutorial", populate: ["author", "category"] });
 
-            console.log(room);
+            const user = await User.updateOne(
+                { _id: userID },
+                { stepFinished: undefined },
+                {}
+            );
 
             return room;
+        },
+        ToggleStepFinished: async (_parent, { userID }) => {
+            const user = await User.findById(userID);
+            user.toggleStepFinished();
+            await user.save((err) => {
+                // TODO - Improve error handling
+                if(err) console.log(err)
+            });
+            return user;
         }
     }
 }
