@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const tutorialSchema = new Schama({
+const tutorialSchema = new Schema({
     steps: [String],
     name: String,
     author: { type: Schema.Types.ObjectId, ref: 'User' },

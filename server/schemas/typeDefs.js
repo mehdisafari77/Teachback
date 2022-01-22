@@ -6,6 +6,7 @@ const typeDefs = gql`
         email: String
         username: String
         password: String
+        stepFinished: Boolean
     }
 
     type Tutorial {
@@ -31,15 +32,19 @@ const typeDefs = gql`
 
     type Query {
         Tutorials(name: String, categoryID: ID): [Tutorial]
-        Room(roomID: ID) Room
+        Room(roomID: ID): Room
         Categories: [Category]
     }
 
     type Mutation {
-        CreateTutorial(steps: [String], name: String, categoryID: ID): Tutorial
+        CreateTutorial(steps: [String], name: String, categoryID: ID, userID: ID): Tutorial
         CreateRoom(tutorialID: ID, ownerID: ID): Room
         CreateUser(email: String, password: String, username: String): User
         Login(username: String, password: String): User
+        ConnectToRoom(roomID: ID, userID: ID): Room
+        DisconnectFromRoom(roomID: ID, userID: ID): Room
+        ToggleStepFinished(userID: ID): User
+        ProgressRoom(roomID: ID): Room
     }
 
 `
