@@ -161,6 +161,43 @@ const resolvers = {
                 if(err) console.log(err)
             });
             return user;
+        },
+        ProgressRoom: async (_parent, { roomID }) => {
+            const room = await Room.findById(roomID)
+            .populate("owner")
+            .populate("connected")
+            .populate({ path: "tutorial", populate: ["author", "category"] });
+            
+            // Check that a room was found
+            if(!room) {
+                // TODO - improve error handling
+                console.log("ERROR PROGRESSING ROOM - Room not found.");
+                return null;
+            }
+
+            if(room.currentStep >= room.tutorial.steps.length) {
+                // TODO - improve error handling
+                console.log("ERROR PROCESSING ROOM - Room's tutorial is already finished.");
+                return room;
+            }
+            
+            // Update the current step and reset each users stepFinished
+            room.currentStep++;
+            room.save((err) => {
+                // TODO - improve error handling
+                if(err) console.log("ERROR PROCESSING ROOM - Room not saved.");
+            });
+
+            for(let user of room.connected) {
+                user.stepFinished = false;
+                user.save((err) => {
+                    // TODO - improve error handling
+                    if(err) console.log("ERROR PROCESSING ROOM - user not saved")
+                });
+            }
+            
+
+            return room;
         }
     }
 }

@@ -44,6 +44,7 @@ const typeDefs = gql`
         ConnectToRoom(roomID: ID, userID: ID): Room
         DisconnectFromRoom(roomID: ID, userID: ID): Room
         ToggleStepFinished(userID: ID): User
+        ProgressRoom(roomID: ID): Room
     }
 
 `
